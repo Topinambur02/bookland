@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bookland
+      POSTGRES_PORT: 5432
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "8000:8000"
+    command: sh -c "poetry run alembic upgrade head && poetry run uvicorn Main:app --reload --host 0.0.0.0 --port 8000"
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata:
+    driver: local
