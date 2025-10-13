@@ -19,7 +19,7 @@ services:
     container_name: backend
     ports:
       - "8000:8000"
-    command: sh -c "poetry run alembic upgrade head && poetry run uvicorn Main:app --reload --host 0.0.0.0 --port 8000"
+    command: sh -c "poetry run uvicorn main:app --reload --host 0.0.0.0 --port 8000"
     depends_on:
       - postgres
 
