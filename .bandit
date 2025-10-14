@@ -1,0 +1,4 @@
+[bandit]
+exclude = .venv,venv,env,.env,__pycache__
+severity-level = high
+confidence-level = high
