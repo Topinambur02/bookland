@@ -8,7 +8,8 @@ import schemas.schemas as schemas
 from exceptions.exceptions import BookNotFoundException
 from hooks.hooks import exception_handlers
 
-Base.metadata.create_all(bind=engine)
+def create_tables():
+    Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Library Management System")
 
@@ -87,5 +88,5 @@ def read_faculties(db: Session = Depends(get_db)):
 
 if __name__ == "__main__":
     import uvicorn
-
+    create_tables()
     uvicorn.run(app="main:app", host="0.0.0.0", port=8000, reload=True)
