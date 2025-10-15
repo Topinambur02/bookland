@@ -1,0 +1,14 @@
+[flake8]
+exclude = 
+    .venv
+    venv
+    env
+    .env
+    build
+    dist
+    __pycache__
+    alembic
+    tests
+    docs
+exit-zero = false
+ignore = E501
