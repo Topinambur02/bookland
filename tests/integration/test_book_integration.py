@@ -1,6 +1,7 @@
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from db.database import Base
 from models.models import Branch, Faculty
 from schemas.schemas import BookCreate, BranchCreate, FacultyCreate
 from exceptions.exceptions import DuplicateBookException
@@ -14,20 +15,22 @@ from crud.crud import (
 
 @pytest.fixture
 def db_session():
-    DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/bookland"
+    DATABASE_URL = "sqlite:///:memory:"
     
-    engine = create_engine(DATABASE_URL)
-    connection = engine.connect()
-    transaction = connection.begin()
-    SessionLocal = sessionmaker(bind=connection)
+    engine = create_engine(
+        DATABASE_URL,
+        connect_args={"check_same_thread": False}
+    )
+    
+    Base.metadata.create_all(bind=engine)
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     session = SessionLocal()
     
-    yield session
-    
-    session.close()
-    transaction.rollback()
-    connection.close()
-    engine.dispose()
+    try:
+        yield session
+    finally:
+        session.close()
+        engine.dispose()
 
 
 class TestBookIntegration:
