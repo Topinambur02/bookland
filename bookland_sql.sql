@@ -28,6 +28,6 @@ CREATE TABLE book_faculty (
     faculty_id INTEGER REFERENCES faculties(id)
 );
 
-CREATE INDEX idx_books_title ON books (title);
-CREATE INDEX idx_branches_name ON branches (name);
-CREATE INDEX idx_faculties_name ON faculties (name);
+CREATE INDEX idx_books_title ON books(title);
+CREATE INDEX idx_branches_name ON branches(name);
+CREATE INDEX idx_faculties_name ON faculties(name);

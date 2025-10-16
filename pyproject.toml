@@ -16,6 +16,7 @@ psycopg2-binary = "^2.9.10"
 pytest = "^8.4.2"
 pytest-mock = "^3.15.1"
 httpx = "^0.28.1"
+sqlfluff = "^3.4.2"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^7.1.1"
